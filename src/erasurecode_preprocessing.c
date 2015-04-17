@@ -141,7 +141,7 @@ int prepare_fragments_for_decode(
                 log_error("Could not allocate data buffer!");
                 return -ENOMEM;
             }
-            *realloc_bm = *realloc_bm | (1 << i);
+            *realloc_bm = *realloc_bm | (BASE_64BIT << i);
         } else if (!is_addr_aligned((unsigned long)data[i], 16)) {
             char *tmp_buf = alloc_fragment_buffer(fragment_size - sizeof(fragment_header_t));
             if (NULL == tmp_buf) {
@@ -150,7 +150,7 @@ int prepare_fragments_for_decode(
             }
             memcpy(tmp_buf, data[i], fragment_size);
             data[i] = tmp_buf;
-            *realloc_bm = *realloc_bm | (1 << i);
+            *realloc_bm = *realloc_bm | (BASE_64BIT << i);
         }
 
         /* Need to determine the size of the original data */
@@ -180,7 +180,7 @@ int prepare_fragments_for_decode(
                 log_error("Could not allocate parity buffer!");
                 return -ENOMEM;
             }
-            *realloc_bm = *realloc_bm | (1 << (k + i));
+            *realloc_bm = *realloc_bm | (BASE_64BIT << (k + i));
         } else if (!is_addr_aligned((unsigned long)parity[i], 16)) {
             char *tmp_buf = alloc_fragment_buffer(fragment_size-sizeof(fragment_header_t));
             if (NULL == tmp_buf) {
@@ -189,7 +189,7 @@ int prepare_fragments_for_decode(
             }
             memcpy(tmp_buf, parity[i], fragment_size);
             parity[i] = tmp_buf;
-            *realloc_bm = *realloc_bm | (1 << (k + i));
+            *realloc_bm = *realloc_bm | (BASE_64BIT << (k + i));
         }
 
     }

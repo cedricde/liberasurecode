@@ -251,6 +251,12 @@ int liberasurecode_instance_create(const ec_backend_id_t id,
     if (id >= EC_BACKENDS_MAX)
         return -EBACKENDNOTSUPP;
 
+    if ((args->k + args->m) > MAX_FRAGMENTS_NUM){
+        log_error("Fragments sum (k + m) must be less than %d\n",
+                  MAX_FRAGMENTS_NUM);
+	return -EINVALIDPARAMS;
+    }
+
     /* Allocate memory for ec_backend instance */
     instance = calloc(1, sizeof(*instance));
     if (NULL == instance)
@@ -681,13 +687,13 @@ out:
     /* Free the buffers allocated in prepare_fragments_for_decode */
     if (realloc_bm != 0) {
         for (i = 0; i < k; i++) {
-            if (realloc_bm & (1 << i)) {
+            if (realloc_bm & (BASE_64BIT << i)) {
                 free(data[i]);
             }
         }
 
         for (i = 0; i < m; i++) {
-            if (realloc_bm & (1 << (i + k))) {
+            if (realloc_bm & (BASE_64BIT << (i + k))) {
                 free(parity[i]);
             }
         }
@@ -842,13 +848,13 @@ out:
     /* Free the buffers allocated in prepare_fragments_for_decode */
     if (realloc_bm != 0) {
         for (i = 0; i < k; i++) {
-            if (realloc_bm & (1 << i)) {
+            if (realloc_bm & (BASE_64BIT << i)) {
                 free(data[i]);
             }
         }
 
         for (i = 0; i < m; i++) {
-            if (realloc_bm & (1 << (i + k))) {
+            if (realloc_bm & (BASE_64BIT << (i + k))) {
                 free(parity[i]);
             }
         }
