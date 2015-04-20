@@ -191,6 +191,19 @@ int prepare_fragments_for_decode(
             parity[i] = tmp_buf;
             *realloc_bm = *realloc_bm | (1 << (k + i));
         }
+       /* Need to determine the size of the original data */
+       if (((missing_bm & (1 << (k + i))) == 0) && orig_data_size < 0) {
+            orig_data_size = get_orig_data_size(parity[i]);
+            if (orig_data_size < 0) {
+                log_error("Invalid orig_data_size in fragment header!");
+                return -EBADHEADER;
+            }
+            payload_size = get_fragment_payload_size(parity[i]);
+            if (orig_data_size < 0) {
+                log_error("Invalid fragment_size in fragment header!");
+                return -EBADHEADER;
+            }
+       }
 
     }
 

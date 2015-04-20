@@ -1123,6 +1123,26 @@ static void test_decode_with_missing_multi_data_parity(
     }
 }
 
+static void test_decode_only_with_parities(
+    const ec_backend_id_t be_id, struct ec_args *args)
+{
+
+    struct ec_args double_parity_args = {
+	.k = 10,
+	.m = 10,
+    };
+
+    int i;
+    int *skip = create_skips_array(&double_parity_args, -1);
+    assert(skip != NULL);
+    for (i = 0; i < 10; i++) {
+        skip[i]=1;
+    }
+    encode_decode_test_impl(be_id, &double_parity_args, skip);
+    free(skip);
+}
+
+
 static void test_simple_encode_decode(const ec_backend_id_t be_id,
                                      struct ec_args *args)
 {
@@ -1435,6 +1455,10 @@ struct testcase testcases[] = {
         test_decode_with_missing_multi_data_parity,
         EC_BACKEND_JERASURE_RS_VAND, CHKSUM_NONE,
         .skip = false},
+    {"test_decode_only_with_parities_jerasure_rs_vand",
+        test_decode_only_with_parities,
+        EC_BACKEND_JERASURE_RS_VAND, CHKSUM_NONE,
+        .skip = false},
     {"simple_reconstruct_jerasure_rs_vand",
         test_simple_reconstruct,
         EC_BACKEND_JERASURE_RS_VAND, CHKSUM_NONE,
@@ -1496,6 +1520,11 @@ struct testcase testcases[] = {
         test_decode_with_missing_multi_data_parity,
         EC_BACKEND_JERASURE_RS_CAUCHY, CHKSUM_NONE,
         .skip = false},
+    // FIXME: something wrong on rs_cauchy
+    // {"test_decode_only_with_parities_jerasure_rs_cauchy",
+    //     test_decode_only_with_parities,
+    //     EC_BACKEND_JERASURE_RS_CAUCHY, CHKSUM_NONE,
+    //     .skip = false},
     {"simple_reconstruct_jerasure_rs_cauchy",
         test_simple_reconstruct,
         EC_BACKEND_JERASURE_RS_CAUCHY, CHKSUM_NONE,
@@ -1557,6 +1586,10 @@ struct testcase testcases[] = {
         test_decode_with_missing_multi_data_parity,
         EC_BACKEND_ISA_L_RS_VAND, CHKSUM_NONE,
         .skip = false},
+    {"test_decode_only_with_parities_isa_l",
+        test_decode_only_with_parities,
+        EC_BACKEND_ISA_L_RS_VAND, CHKSUM_NONE,
+        .skip = false},
     {"simple_reconstruct_isa_l",
         test_simple_reconstruct,
         EC_BACKEND_ISA_L_RS_VAND, CHKSUM_NONE,
@@ -1612,6 +1645,10 @@ struct testcase testcases[] = {
         .skip = false},
     {"test_decode_with_missing_multi_data_parity_shss",
         test_decode_with_missing_multi_data_parity,
+        EC_BACKEND_SHSS, CHKSUM_NONE,
+        .skip = false},
+    {"test_decode_only_with_parities_shss",
+        test_decode_only_with_parities,
         EC_BACKEND_SHSS, CHKSUM_NONE,
         .skip = false},
     {"simple_reconstruct_shss",
