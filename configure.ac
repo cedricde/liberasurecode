@@ -15,8 +15,8 @@ dnl Needed when reconfiguring with 'autoreconf -i -s'
 AC_CONFIG_MACRO_DIR([m4])
 
 AM_MAINTAINER_MODE([disable])
-m4_ifndef([AM_SILENT_RULES], [m4_define([AM_SILENT_RULES],[])])
-AM_SILENT_RULES([yes])
+#m4_ifndef([AM_SILENT_RULES], [m4_define([AM_SILENT_RULES],[])])
+#AM_SILENT_RULES([yes])
 
 dnl Compiling with per-target flags requires AM_PROG_CC_C_O.
 AC_PROG_CC
@@ -127,6 +127,7 @@ AM_CONDITIONAL(ENABLE_DOXYGEN, test x$enable_doxygen = xyes)
 AC_CONFIG_FILES([\
     src/builtin/null_code/Makefile \
     src/builtin/xor_codes/Makefile \
+    src/builtin/rs_vand/Makefile \
     src/Makefile \
     test/Makefile \
     doc/Makefile \

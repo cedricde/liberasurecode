@@ -12,7 +12,7 @@ INCLUDE = -I$(abs_top_builddir)/include \
 AM_CPPFLAGS = $(CPPFLAGS) $(INCLUDE)
 AM_CPPFLAGS += -Werror -Wall
 
-AM_CFLAGS = -fPIC $(AM_CPPFLAGS) @GCOV_FLAGS@ -L/usr/local/lib
+AM_CFLAGS = -static -fPIC $(AM_CPPFLAGS) @GCOV_FLAGS@ -L/usr/local/lib
 
 include_HEADERS = \
 	include/erasurecode/alg_sig.h \
