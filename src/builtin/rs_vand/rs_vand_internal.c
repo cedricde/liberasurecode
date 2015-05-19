@@ -398,7 +398,7 @@ void region_dot_product(char **from_bufs, char *to_buf, int *matrix_row, int num
   }
 }
 
-int liberasurecode_rs_vand_encode(int *generator_matrix, char **data, char **parity, int k, int m, int blocksize)
+int internal_rs_vand_encode(int *generator_matrix, char **data, char **parity, int k, int m, int blocksize)
 {
   int i;
   int n = k + m;
@@ -425,7 +425,7 @@ char **get_first_k_available(char **data, char **parity, int *missing, int k)
   return first_k_available;
 }
 
-int liberasurecode_rs_vand_decode(int *generator_matrix, char **data, char **parity, int k, int m, int *missing, int blocksize, int rebuild_parity)
+int internal_rs_vand_decode(int *generator_matrix, char **data, char **parity, int k, int m, int *missing, int blocksize, int rebuild_parity)
 {
   int *decoding_matrix = NULL;
   int *inverse_decoding_matrix = NULL;
@@ -480,7 +480,7 @@ int liberasurecode_rs_vand_decode(int *generator_matrix, char **data, char **par
   return 0;
 }
 
-int liberasurecode_rs_vand_reconstruct(int *generator_matrix, char **data, char **parity, int k, int m, int *missing, int destination_idx, int blocksize)
+int internal_rs_vand_reconstruct(int *generator_matrix, char **data, char **parity, int k, int m, int *missing, int destination_idx, int blocksize)
 {
   int *decoding_matrix = NULL;
   int *inverse_decoding_matrix = NULL;

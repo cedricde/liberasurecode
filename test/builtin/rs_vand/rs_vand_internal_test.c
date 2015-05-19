@@ -149,7 +149,7 @@ int test_encode_decode(int k, int m, int num_missing, int blocksize)
   }
   
   // Encode
-  liberasurecode_rs_vand_encode(matrix, data, parity, k, m, blocksize); 
+  internal_rs_vand_encode(matrix, data, parity, k, m, blocksize); 
 
   // Copy data and parity
   for (i = 0;i < num_missing; i++) {
@@ -172,7 +172,7 @@ int test_encode_decode(int k, int m, int num_missing, int blocksize)
   }
   
   // Decode and check
-  liberasurecode_rs_vand_decode(matrix, data, parity, k, m, missing, blocksize, 1);
+  internal_rs_vand_decode(matrix, data, parity, k, m, missing, blocksize, 1);
 
   for (i = 0; i < num_missing; i++) {
     int idx = missing[i];
@@ -232,7 +232,7 @@ int test_reconstruct(int k, int m, int num_missing, int blocksize)
   }
   
   // Encode
-  liberasurecode_rs_vand_encode(matrix, data, parity, k, m, blocksize); 
+  internal_rs_vand_encode(matrix, data, parity, k, m, blocksize); 
 
   // Copy data and parity
   for (i = 0; i < num_missing; i++) {
@@ -258,7 +258,7 @@ int test_reconstruct(int k, int m, int num_missing, int blocksize)
   }
   
   // Reconstruct and check destination buffer
-  liberasurecode_rs_vand_reconstruct(matrix, data, parity, k, m, missing, destination_idx, blocksize);
+  internal_rs_vand_reconstruct(matrix, data, parity, k, m, missing, destination_idx, blocksize);
 
   // The original copy of the destination buffer is in the 0th buffer (see above)
   if (destination_idx < k) { 
